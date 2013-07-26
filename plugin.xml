@@ -15,7 +15,7 @@
 		</feature>
         </config-file>
 
-        <js-module src="www/js/DatePicker.js" name="DatePicker">
+        <js-module src="www/DatePicker.js" name="DatePicker">
             <clobbers target="datePicker" />
         </js-module>
 
