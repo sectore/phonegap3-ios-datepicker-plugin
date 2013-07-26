@@ -3,8 +3,10 @@
 //	MIT Licensed
 //
 //  Additional refactoring by Sam de Freyssinet
+//	Updated to Phonegap 3.0.0 by Jens Krause (www.websector.de)
 
 #import "DatePicker.h"
+#import <Cordova/CDV.h>
 
 @interface DatePicker (Private)
 
@@ -52,12 +54,13 @@
 	return self;
 }
 
-- (void)show:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+//- (void)show:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void)show:(CDVInvokedUrlCommand*)command;
 {
 	if (isVisible) {
 		return;        
 	}
-
+	NSMutableDictionary* options = [command argumentAtIndex:0];
 	[self configureDatePicker:options];
 	[self.datePickerSheet showInView:[[super webView] superview]];	
 	[self.datePickerSheet setBounds:CGRectMake(0, 0, 320, 485)];
@@ -78,24 +81,13 @@
 	if (isVisible) {
 		return;
 	}
-
-	[self release];
-}
-
-- (void)dealloc
-{
-	[_datePicker release];
-	[_datePickerSheet release];
-	[_isoDateFormatter release];
-
-	[super dealloc];
 }
 
 #pragma mark - UIActionSheetDelegate methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.datePicker._dateSelected(\"%i\");", (int)[self.datePicker.date timeIntervalSince1970]];
+	NSString* jsCallback = [NSString stringWithFormat:@"datePicker._dateSelected(\"%i\");", (int)[self.datePicker.date timeIntervalSince1970]];
 	[super writeJavascript:jsCallback];
 }
 
@@ -109,10 +101,10 @@
 - (void)initActionSheet:(id <UIActionSheetDelegate>)delegateOrNil datePicker:(UIDatePicker *)datePicker closeButton:(UISegmentedControl *)closeButton
 {
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-															 delegate:delegateOrNil 
-													cancelButtonTitle:nil 
-											   destructiveButtonTitle:nil 
-													otherButtonTitles:nil];
+																	delegate:delegateOrNil 
+																	cancelButtonTitle:nil 
+																	destructiveButtonTitle:nil 
+																	otherButtonTitles:nil];
 
 	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
 
@@ -120,14 +112,12 @@
 	[actionSheet addSubview:closeButton];
 
 	self.datePickerSheet = actionSheet;
-
-	[actionSheet release];
 }
 
 - (UIDatePicker *)createDatePicker:(CGRect)pickerFrame
 {
 	UIDatePicker *datePickerControl = [[UIDatePicker alloc] initWithFrame:pickerFrame];
-	return [datePickerControl autorelease];
+	return datePickerControl;
 }
 
 - (NSDateFormatter *)createISODateFormatter:(NSString *)format timezone:(NSTimeZone *)timezone;
@@ -136,7 +126,7 @@
 	[dateFormatter setTimeZone:timezone];
 	[dateFormatter setDateFormat:format];
 
-	return [dateFormatter autorelease];
+	return dateFormatter;
 }
 
 - (UISegmentedControl *)createActionSheetCloseButton:(NSString *)title target:(id)target action:(SEL)action
@@ -150,7 +140,7 @@
 
 	[closeButton addTarget:target action:action forControlEvents:UIControlEventValueChanged];
 
-	return [closeButton autorelease];
+	return closeButton;
 }
 
 - (void)configureDatePicker:(NSMutableDictionary *)optionsOrNil;
