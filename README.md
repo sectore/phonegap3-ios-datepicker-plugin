@@ -11,6 +11,8 @@ This is a port of the iOS DatePicker plugin hosted on [https://github.com/phoneg
 
 1) Make sure that you have [Node](http://nodejs.org/) and [Cordova CLI](https://github.com/apache/cordova-cli) or [PhoneGap's CLI](https://github.com/mwbrooks/phonegap-cli) or [Cordova Plugman](https://github.com/apache/cordova-plugman/) installed on your machine.
 
+Also you will need Xcode v.4.2 or newer to support the feature called ["Automatic Reference Counting"](http://developer.apple.com/library/ios/#documentation/DeveloperTools/Conceptual/WhatsNewXcode/Articles/xcode_4_2.html)
+
 2) Add a plugin to your project using [Cordova CLI](https://github.com/apache/cordova-cli):
 
 ```bash
