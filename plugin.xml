@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+           id="org.apache.cordova.core.datepicker"
+      version="0.1.0">
+
+    <name>Datepicker</name>
+
+    <!-- ios -->
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+		<feature name="DatePicker">
+			<param name="ios-package" value="DatePicker"/>
+		</feature>
+        </config-file>
+
+        <js-module src="www/js/DatePicker.js" name="DatePicker">
+            <clobbers target="datePicker" />
+        </js-module>
+
+	   <header-file src="src/ios/DatePicker.h" />
+	   <source-file src="src/ios/DatePicker.m" />
+
+    </platform>
+
+</plugin>
