@@ -87,7 +87,8 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	NSString* jsCallback = [NSString stringWithFormat:@"datePicker._dateSelected(\"%i\");", (int)[self.datePicker.date timeIntervalSince1970]];
+	NSTimeInterval seconds = [self.datePicker.date timeIntervalSince1970];
+	NSString* jsCallback = [NSString stringWithFormat:@"datePicker._dateSelected(\"%f\");", seconds];
 	[super writeJavascript:jsCallback];
 }
 
