@@ -5,6 +5,9 @@
       version="0.1.0">
 
     <name>Datepicker</name>
+    <description>Cordova Datepicker Plugin (iOS only)</description>
+    <license>MIT</license>
+    <keywords>cordova,datepicker,ios</keywords>
 
     <!-- ios -->
     <platform name="ios">
