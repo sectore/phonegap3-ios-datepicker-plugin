@@ -31,7 +31,6 @@
 
 #pragma mark - Public Methods
 
-
 //- (void)show:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 - (void)show:(CDVInvokedUrlCommand*)command;
 {
