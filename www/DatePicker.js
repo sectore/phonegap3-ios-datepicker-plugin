@@ -55,11 +55,12 @@ DatePicker.prototype.show = function(options, cb) {
 
     var defaults = {
         mode : 'datetime',
-        date : '',
+        date : new Date(),
         allowOldDates : true,
         allowFutureDates : true,
         minDate: '',
-        maxDate: ''
+        maxDate: '',
+        closeButtonLabel: 'Close'
     };
 
     for (var key in defaults) {
@@ -77,7 +78,6 @@ DatePicker.prototype.show = function(options, cb) {
 };
 
 DatePicker.prototype._dateSelected = function(date) {
-  console.log("_dateSelected " + date);
     var d = new Date(parseFloat(date) * 1000);
     if (this._callback)
         this._callback(d);
