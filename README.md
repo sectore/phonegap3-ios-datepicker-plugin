@@ -1,6 +1,6 @@
 # DatePicker iOS Plugin for using PhoneGap 3.0
 
-This is a port of the iOS DatePicker plugin hosted on [https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker](https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker)
+This is a port (incl. new features) of the iOS DatePicker plugin hosted on [https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker](https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker)
 
 ## Screen shot
 
@@ -32,12 +32,18 @@ plugman --platform ios --project ./platforms/ios --plugin https://github.com/sec
 ```
 
 
-3) Register plugin within `config.xml` of your app
+3a) Register plugin within `config.xml` of your app
 
 ```xml
 <feature name="DatePicker">
     <param name="ios-package" value="DatePicker"/>
 </feature>
+```
+
+3b) If you are using [PhoneGap build service](https://build.phonegap.com/) add to `config.xml`
+
+```xml
+<gap:plugin name="de.websector.datepicker" />
 ```
 
 4) The `clobber` definition of the plugin is called `datePicker`. So you can reference to the plugin from anywhere in your code.
@@ -56,7 +62,66 @@ datePicker.show(options, function(date){
 });
 ```
 
+Check section ["Options"](#options) below to see all options.
+
+## Options
+
+### mode
+The mode of the date picker.
+
+Typ: `String` 
+
+Values: `"date"` / `"time"` / `"datetime"`
+
+Default: `'datetime'`
+
+### date
+Selected date.
+
+Typ: `String`
+
+Default: `new Date()`
+
+### allowOldDates
+Shows or hide dates earlier then selected date.
+
+Typ: `Boolean`
+
+Values: `true` / `false`
+
+Default: `true`
+
+### allowFutureDates
+Shows or hide dates after selected date.
+
+Typ: `Boolean`
+
+Values: `true` / `false`
+
+Default: `true`
+
+### minDate (new)
+Minimum date.
+
+Typ: `Date` or empty `String`
+
+Default: `''` (empty String)
+
+### maxDate (new)
+Maximum date.
+
+Typ: `Date` or empty `String`
+
+Default: `''` (empty String)
+
+### closeButtonLabel (new)
+Label of close button.
+
+Typ: `String`
+
+Default: `'Close'`
+
 ## Author of migration to PhoneGap 3.0
-Jens Krause // [WEBSECTOR.DE](http://www.websector.de) 
+Jens Krause // [WEBSECTOR.DE](http://www.websector.de)
 
 
