@@ -54,13 +54,16 @@ DatePicker.prototype.show = function(options, cb) {
     }
 
     var defaults = {
-        mode : 'datetime',
-        date : new Date(),
-        allowOldDates : true,
-        allowFutureDates : true,
+        mode: 'datetime',
+        date: new Date(),
+        allowOldDates: true,
+        allowFutureDates: true,
         minDate: '',
         maxDate: '',
-        closeButtonLabel: 'Close'
+        doneButtonLabel: 'Done',
+        cancelButtonLabel: 'Cancel',
+        x: '0',
+        y: '0'
     };
 
     for (var key in defaults) {

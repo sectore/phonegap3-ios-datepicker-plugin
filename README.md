@@ -1,11 +1,16 @@
-# DatePicker iOS Plugin for using PhoneGap 3.0
+# DatePicker iOS Plugin for using PhoneGap / Cordova 3.0
 
-This is a port (incl. new features) of the iOS DatePicker plugin hosted on [https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker](https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker)
+This is a re-write of the iOS DatePicker plugin hosted on [https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker](https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker) to run with PhoneGap/Cordova 3.0. 
 
-## Screen shot
+It includes [more options](#options) and it is ready for iPhone and iPad.
 
-[![screen shot](https://raw.github.com/sectore/phonegap3-ios-datepicker-plugin/master/assets/screenshot.png)](https://github.com/sectore/phonegap3-ios-datepicker-plugin)
+## Screen shots
 
+### iPhone
+[![screen shot iPhone](https://raw.github.com/sectore/phonegap3-ios-datepicker-plugin/master/assets/screenshot.jpg)](https://github.com/sectore/phonegap3-ios-datepicker-plugin)
+
+### iPad
+[![screen shot iPad](https://raw.github.com/sectore/phonegap3-ios-datepicker-plugin/master/assets/screenshot_ipad.jpg)](https://github.com/sectore/phonegap3-ios-datepicker-plugin)
 
 ## Installation
 
@@ -19,7 +24,7 @@ Also you will need Xcode v.4.2 or newer to support the feature called ["Automati
 cordova plugin add https://github.com/sectore/phonegap3-ios-datepicker-plugin
 ```
 
-Or using [Phonegap CLI](https://github.com/mwbrooks/phonegap-cli):
+Or using [PhoneGap CLI](https://github.com/mwbrooks/phonegap-cli):
 
 ```bash
 phonegap local plugin add https://github.com/sectore/phonegap3-ios-datepicker-plugin
@@ -114,12 +119,37 @@ Typ: `Date` or empty `String`
 
 Default: `''` (empty String)
 
-### closeButtonLabel (new)
-Label of close button.
+### doneButtonLabel (new)
+Label of done button.
 
 Typ: `String`
 
-Default: `'Close'`
+Default: `'Done'`
+
+### cancelButtonLabel (new)
+Label of cancel button.
+
+Typ: `String`
+
+Default: `'Cancel'`
+
+### x (new)
+X position of date picker (iPad only). The position is absolute to the root view of the application.
+
+Typ: `String`
+
+Default: `'0'`
+
+### y (new)
+Y position of date picker (iPad only). The position is absolute to the root view of the application.
+
+Typ: `String`
+
+Default: `'0'`
+
+## Requirements
+- PhoneGap 3.0 or newer /Cordova 3.0 or newer
+- iOS 5 or newer
 
 ## Author of migration to PhoneGap 3.0
 Jens Krause // [WEBSECTOR.DE](http://www.websector.de)

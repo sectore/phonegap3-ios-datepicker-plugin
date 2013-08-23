@@ -1,7 +1,12 @@
-//  Phonegap DatePicker Plugin
-//  Copyright (c) Greg Allen 2011
-//  Refactored to Phonegap 3.0.0 (incl. some more options) by Jens Krause (www.websector.de)
-//  MIT Licensed
+/*
+  Phonegap DatePicker Plugin
+  
+  Copyright (c) Greg Allen 2011
+  Additional refactoring by Sam de Freyssinet
+  Rewrite by Jens Krause (www.websector.de)
+
+  MIT Licensed
+*/
 
 #import <Foundation/Foundation.h>
 #import <Cordova/CDV.h>
@@ -10,14 +15,9 @@
 #define k_DATEPICKER_DATETIME_FORMAT @"yyyy-MM-dd'T'HH:mm:ss'Z'"
 #endif
 
-@interface DatePicker : CDVPlugin <UIActionSheetDelegate> {
-  UIActionSheet *_datePickerSheet;
-  UIDatePicker *_datePicker;
-  BOOL isVisible;
+@interface DatePicker : CDVPlugin <UIActionSheetDelegate, UIPopoverControllerDelegate> {
+    
 }
-
-@property (nonatomic) UIActionSheet* datePickerSheet;
-@property (nonatomic) UIDatePicker* datePicker;
 
 - (void)show:(CDVInvokedUrlCommand*)command;
 
