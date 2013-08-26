@@ -75,7 +75,6 @@
 - (void)jsDateSelected {
   NSTimeInterval seconds = [self.datePicker.date timeIntervalSince1970];
   NSString* jsCallback = [NSString stringWithFormat:@"datePicker._dateSelected(\"%f\");", seconds];
-  NSLog(@"jsDateSelected");
   [super writeJavascript:jsCallback];
 }
 
