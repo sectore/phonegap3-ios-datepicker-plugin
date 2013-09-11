@@ -35,14 +35,24 @@
 
 - (void)showForPhone:(NSMutableDictionary *)options {
   if(!self.isVisible){
-		self.datePickerSheet = [self createActionSheet:options];
+    if (!self.datePickerSheet){
+      self.datePickerSheet = [self createActionSheet:options];
+    }
+    [self.datePickerSheet showInView:[[super webView] superview]];
+    [self.datePickerSheet setBounds:CGRectMake(0, 0, 320, 485)];
 		self.isVisible = TRUE;
 	}
 }
 
 - (void)showForPad:(NSMutableDictionary *)options {
   if(!self.isVisible){
-    self.datePickerPopover = [self createPopover:options];
+    if (!self.datePickerPopover){
+      self.datePickerPopover = [self createPopover:options];
+    }
+    CGFloat x = [[options objectForKey:@"x"] intValue];
+    CGFloat y = [[options objectForKey:@"y"] intValue];
+    CGRect anchor = CGRectMake(x, y, 1, 1);
+    [self.datePickerPopover presentPopoverFromRect:anchor inView:self.webView.superview  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];   
     self.isVisible = TRUE;
   }    
 }
@@ -118,9 +128,6 @@
 	NSString *doneButtonLabel = [options objectForKey:@"doneButtonLabel"];
 	UISegmentedControl *doneButton = [self createDoneButton:doneButtonLabel];    
 	[actionSheet addSubview:doneButton];
-    
-	[actionSheet showInView:[[super webView] superview]];
-	[actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
 
 	return actionSheet;
 }
@@ -140,14 +147,9 @@
   UIViewController *datePickerViewController = [[UIViewController alloc]init];
   datePickerViewController.view = datePickerView;
   
-  CGFloat x = [[options objectForKey:@"x"] intValue];
-  CGFloat y = [[options objectForKey:@"y"] intValue];
-  CGRect anchor = CGRectMake(x, y, 1, 1);
-  
   UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:datePickerViewController];
   popover.delegate = self;
   [popover setPopoverContentSize:CGSizeMake(pickerViewWidth, pickerViewHeight) animated:NO];
-  [popover presentPopoverFromRect:anchor inView:self.webView.superview  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
   
   return popover;
 }
