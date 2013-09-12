@@ -1,11 +1,13 @@
 /*
-	Phonegap DatePicker Plugin
+  Phonegap DatePicker Plugin
+  https://github.com/sectore/phonegap3-ios-datepicker-plugin  
+  
+  Copyright (c) Greg Allen 2011
+  Additional refactoring by Sam de Freyssinet
+  
+  Rewrite by Jens Krause (www.websector.de)
 
-	Copyright (c) Greg Allen 2011
-	Additional refactoring by Sam de Freyssinet
-	Rewrite by Jens Krause (www.websector.de)
-
-	MIT Licensed
+  MIT Licensed
 */
 
 #import "DatePicker.h"
@@ -26,18 +28,18 @@
 
 - (void)show:(CDVInvokedUrlCommand*)command {
   NSMutableDictionary *options = [command argumentAtIndex:0];
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-	  [self showForPhone: options];
-	} else {
-	  [self showForPad: options];
-	}   
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    [self showForPhone: options];
+  } else {
+    [self showForPad: options];
+  }   
 }
 
 - (BOOL)showForPhone:(NSMutableDictionary *)options {
   if(!self.isVisible){
     self.datePickerSheet = [self createActionSheet:options];
-		self.isVisible = TRUE;
-	}
+    self.isVisible = TRUE;
+  }
   return true;
 }
 
@@ -64,12 +66,12 @@
 
 
 - (void)cancelAction:(id)sender {
-	[self hide];
+  [self hide];
 }
 
 
 - (void)dateChangedAction:(id)sender {
-	[self jsDateSelected];
+  [self jsDateSelected];
 }
 
 #pragma mark - JS API
@@ -101,12 +103,12 @@
 #pragma mark - Factory methods
 
 - (UIActionSheet *)createActionSheet:(NSMutableDictionary *)options {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+  UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                         delegate:self cancelButtonTitle:nil
                                                         destructiveButtonTitle:nil 
                                                         otherButtonTitles:nil];
 
-	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+  [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
   // date picker
   CGRect frame = CGRectMake(0, 40, 0, 0);
   if(!self.datePicker){
@@ -115,18 +117,16 @@
   [self updateDatePicker:options];
   [actionSheet addSubview: self.datePicker];
   // cancel button
-	NSString *cancelButtonLabel = [options objectForKey:@"cancelButtonLabel"];
-	UISegmentedControl *cancelButton = [self createCancelButton:cancelButtonLabel];
-	[actionSheet addSubview:cancelButton];
+  UISegmentedControl *cancelButton = [self createCancelButton:options];
+  [actionSheet addSubview:cancelButton];
   // done button
-	NSString *doneButtonLabel = [options objectForKey:@"doneButtonLabel"];
-	UISegmentedControl *doneButton = [self createDoneButton:doneButtonLabel];    
-	[actionSheet addSubview:doneButton];
+  UISegmentedControl *doneButton = [self createDoneButton:options];    
+  [actionSheet addSubview:doneButton];
   // show UIActionSheet
   [actionSheet showInView:self.webView.superview];
   [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
 
-	return actionSheet;
+  return actionSheet;
 }
 
 - (UIPopoverController *)createPopover:(NSMutableDictionary *)options {
@@ -158,9 +158,9 @@
   return popover;
 }
 
-- (UIDatePicker *)createDatePicker:(NSMutableDictionary *)options frame:(CGRect)frame {	
+- (UIDatePicker *)createDatePicker:(NSMutableDictionary *)options frame:(CGRect)frame { 
   UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:frame];      
-	return datePicker;
+  return datePicker;
 }
 
 - (void)updateDatePicker:(NSMutableDictionary *)options {
@@ -209,37 +209,42 @@
 }
 
 - (NSDateFormatter *)createISODateFormatter:(NSString *)format timezone:(NSTimeZone *)timezone {
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setTimeZone:timezone];
-	[dateFormatter setDateFormat:format];
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setTimeZone:timezone];
+  [dateFormatter setDateFormat:format];
 
-	return dateFormatter;
+  return dateFormatter;
 }
 
 
-- (UISegmentedControl *)createCancelButton:(NSString *)title {
-	UISegmentedControl *button = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:title]];
+- (UISegmentedControl *)createCancelButton:(NSMutableDictionary *)options {
+  NSString *label = [options objectForKey:@"cancelButtonLabel"];
+  UISegmentedControl *button = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:label]];
+
+  NSString *tintColorHex = [options objectForKey:@"cancelButtonColor"];
+  button.tintColor = [self colorFromHexString: tintColorHex];  
     
-	button.momentary = YES;
-	button.segmentedControlStyle = UISegmentedControlStyleBar;
-	button.tintColor = [UIColor blackColor];
-	button.apportionsSegmentWidthsByContent = YES;
+  button.momentary = YES;
+  button.segmentedControlStyle = UISegmentedControlStyleBar;
+  button.apportionsSegmentWidthsByContent = YES;
   
   CGSize size = button.bounds.size;
   button.frame = CGRectMake(5, 7.0f, size.width, size.height);
   
-	[button addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventValueChanged];
+  [button addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventValueChanged];
     
-	return button;
+  return button;
 }
 
-- (UISegmentedControl *)createDoneButton:(NSString *)title {
-	UISegmentedControl *button = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:title]];
-	
+- (UISegmentedControl *)createDoneButton:(NSMutableDictionary *)options {
+  NSString *label = [options objectForKey:@"doneButtonLabel"];
+  UISegmentedControl *button = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:label]];
+  NSString *tintColorHex = [options objectForKey:@"doneButtonColor"];
+  button.tintColor = [self colorFromHexString: tintColorHex];
+
   button.momentary = YES;
-	button.segmentedControlStyle = UISegmentedControlStyleBar;
-	button.tintColor = [UIColor blueColor];
-	button.apportionsSegmentWidthsByContent = YES;
+  button.segmentedControlStyle = UISegmentedControlStyleBar;
+  button.apportionsSegmentWidthsByContent = YES;
     
   CGSize size = button.bounds.size;
   CGFloat width = size.width;
@@ -247,9 +252,19 @@
   CGFloat xPos = 320 - width - 5; // 320 == width of DatePicker, 5 == offset to right side hand
   button.frame = CGRectMake(xPos, 7.0f, width, height);
   
-	[button addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventValueChanged];
+  [button addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventValueChanged];
 
-	return button;
+  return button;
+}
+
+// Helper method to convert a hex string into UIColor
+// @see: http://stackoverflow.com/questions/1560081/how-can-i-create-a-uicolor-from-a-hex-string
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
 @end

@@ -1,11 +1,14 @@
 /**
- * Cordova DatePicker Plugin
- * Copyright (c) Greg Allen 2011
- * MIT Licensed
- *
- * Updated for Cordova 2.1 by Robert (Jamie) Munro
- * Updated to Phonegap 3.0.0 by Jens Krause (www.websector.de)
- */
+  Phonegap DatePicker Plugin
+  https://github.com/sectore/phonegap3-ios-datepicker-plugin
+  
+  Copyright (c) Greg Allen 2011
+  Additional refactoring by Sam de Freyssinet
+  
+  Rewrite by Jens Krause (www.websector.de)
+
+  MIT Licensed
+*/
 
 var exec = require('cordova/exec');
 /**
@@ -61,7 +64,9 @@ DatePicker.prototype.show = function(options, cb) {
         minDate: '',
         maxDate: '',
         doneButtonLabel: 'Done',
+        doneButtonColor: '#0000FF',
         cancelButtonLabel: 'Cancel',
+        cancelButtonColor: '#000000',
         x: '0',
         y: '0'
     };
