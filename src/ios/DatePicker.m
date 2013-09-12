@@ -25,36 +25,28 @@
 #pragma mark - UIDatePicker
 
 - (void)show:(CDVInvokedUrlCommand*)command {
-	NSMutableDictionary *options = [command argumentAtIndex:0];    
+  NSMutableDictionary *options = [command argumentAtIndex:0];
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 	  [self showForPhone: options];
 	} else {
 	  [self showForPad: options];
-	}
+	}   
 }
 
-- (void)showForPhone:(NSMutableDictionary *)options {
+- (BOOL)showForPhone:(NSMutableDictionary *)options {
   if(!self.isVisible){
-    if (!self.datePickerSheet){
-      self.datePickerSheet = [self createActionSheet:options];
-    }
-    [self.datePickerSheet showInView:[[super webView] superview]];
-    [self.datePickerSheet setBounds:CGRectMake(0, 0, 320, 485)];
+    self.datePickerSheet = [self createActionSheet:options];
 		self.isVisible = TRUE;
 	}
+  return true;
 }
 
-- (void)showForPad:(NSMutableDictionary *)options {
+- (BOOL)showForPad:(NSMutableDictionary *)options {
   if(!self.isVisible){
-    if (!self.datePickerPopover){
-      self.datePickerPopover = [self createPopover:options];
-    }
-    CGFloat x = [[options objectForKey:@"x"] intValue];
-    CGFloat y = [[options objectForKey:@"y"] intValue];
-    CGRect anchor = CGRectMake(x, y, 1, 1);
-    [self.datePickerPopover presentPopoverFromRect:anchor inView:self.webView.superview  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];   
+    self.datePickerPopover = [self createPopover:options];
     self.isVisible = TRUE;
-  }    
+  }
+  return true;    
 }
 
 - (void)hide {
@@ -117,9 +109,11 @@
 	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
   // date picker
   CGRect frame = CGRectMake(0, 40, 0, 0);
-  UIDatePicker *datePicker = [self createDatePicker: options frame:frame];
-	self.datePicker = datePicker;
-	[actionSheet addSubview:datePicker];
+  if(!self.datePicker){
+    self.datePicker = [self createDatePicker: options frame:frame];
+  } 
+  [self updateDatePicker:options];
+  [actionSheet addSubview: self.datePicker];
   // cancel button
 	NSString *cancelButtonLabel = [options objectForKey:@"cancelButtonLabel"];
 	UISegmentedControl *cancelButton = [self createCancelButton:cancelButtonLabel];
@@ -128,6 +122,9 @@
 	NSString *doneButtonLabel = [options objectForKey:@"doneButtonLabel"];
 	UISegmentedControl *doneButton = [self createDoneButton:doneButtonLabel];    
 	[actionSheet addSubview:doneButton];
+  // show UIActionSheet
+  [actionSheet showInView:self.webView.superview];
+  [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
 
 	return actionSheet;
 }
@@ -139,11 +136,13 @@
   UIView *datePickerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, pickerViewWidth, pickerViewHeight)];
 
   CGRect frame = CGRectMake(0, 0, 0, 0);
-  UIDatePicker *datePicker = [self createDatePicker:options frame:frame];
-  [datePicker addTarget:self action:@selector(dateChangedAction:) forControlEvents:UIControlEventValueChanged];
-	self.datePicker = datePicker;
+  if(!self.datePicker){
+    self.datePicker = [self createDatePicker:options frame:frame];
+    [self.datePicker addTarget:self action:@selector(dateChangedAction:) forControlEvents:UIControlEventValueChanged];    
+  }
+  [self updateDatePicker:options]; 
   [datePickerView addSubview:self.datePicker];
-  
+
   UIViewController *datePickerViewController = [[UIViewController alloc]init];
   datePickerViewController.view = datePickerView;
   
@@ -151,57 +150,62 @@
   popover.delegate = self;
   [popover setPopoverContentSize:CGSizeMake(pickerViewWidth, pickerViewHeight) animated:NO];
   
+  CGFloat x = [[options objectForKey:@"x"] intValue];
+  CGFloat y = [[options objectForKey:@"y"] intValue];
+  CGRect anchor = CGRectMake(x, y, 1, 1);
+  [popover presentPopoverFromRect:anchor inView:self.webView.superview  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];   
+  
   return popover;
 }
 
-- (UIDatePicker *)createDatePicker:(NSMutableDictionary *)options frame:(CGRect)frame {
-	UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:frame];
-    
-  NSDateFormatter *formatter = [self createISODateFormatter:k_DATEPICKER_DATETIME_FORMAT timezone:[NSTimeZone defaultTimeZone]];
-    
-  NSString *mode = [options objectForKey:@"mode"];
-	NSString *dateString = [options objectForKey:@"date"];
-	BOOL allowOldDates = NO;
-	BOOL allowFutureDates = YES;
-	NSString *minDateString = [options objectForKey:@"minDate"];
-	NSString *maxDateString = [options objectForKey:@"maxDate"];
-    
-	if ([[options objectForKey:@"allowOldDates"] intValue] == 1) {
-		allowOldDates = YES;
-	}
-    
-	if ( !allowOldDates) {
-		datePicker.minimumDate = [NSDate date];
-	}
-    
-	if(minDateString){
-		datePicker.minimumDate = [formatter dateFromString:minDateString];
-	}
-	
-	if ([[options objectForKey:@"allowFutureDates"] intValue] == 0) {
-		allowFutureDates = NO;
-	}
-    
-	if ( !allowFutureDates) {
-		datePicker.maximumDate = [NSDate date];
-	}
-    
-	if(maxDateString){
-		datePicker.maximumDate = [formatter dateFromString:maxDateString];
-	}
-    
-	datePicker.date = [formatter dateFromString:dateString];
-    
-	if ([mode isEqualToString:@"date"]) {
-		datePicker.datePickerMode = UIDatePickerModeDate;
-	}
-	else if ([mode isEqualToString:@"time"]) {
-		datePicker.datePickerMode = UIDatePickerModeTime;
-	} else {
-		datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-	}
-    
+- (UIDatePicker *)createDatePicker:(NSMutableDictionary *)options frame:(CGRect)frame {	
+  UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:frame];      
 	return datePicker;
+}
+
+- (void)updateDatePicker:(NSMutableDictionary *)options {
+  NSDateFormatter *formatter = [self createISODateFormatter:k_DATEPICKER_DATETIME_FORMAT timezone:[NSTimeZone defaultTimeZone]];
+  NSString *mode = [options objectForKey:@"mode"];
+  NSString *dateString = [options objectForKey:@"date"];
+  BOOL allowOldDates = NO;
+  BOOL allowFutureDates = YES;
+  NSString *minDateString = [options objectForKey:@"minDate"];
+  NSString *maxDateString = [options objectForKey:@"maxDate"];
+    
+  if ([[options objectForKey:@"allowOldDates"] intValue] == 1) {
+    allowOldDates = YES;
+  }
+    
+  if ( !allowOldDates) {
+    self.datePicker.minimumDate = [NSDate date];
+  }
+    
+  if(minDateString){
+    self.datePicker.minimumDate = [formatter dateFromString:minDateString];
+  }
+  
+  if ([[options objectForKey:@"allowFutureDates"] intValue] == 0) {
+    allowFutureDates = NO;
+  }
+    
+  if ( !allowFutureDates) {
+    self.datePicker.maximumDate = [NSDate date];
+  }
+    
+  if(maxDateString){
+    self.datePicker.maximumDate = [formatter dateFromString:maxDateString];
+  }
+    
+  self.datePicker.date = [formatter dateFromString:dateString];
+    
+  if ([mode isEqualToString:@"date"]) {
+    self.datePicker.datePickerMode = UIDatePickerModeDate;
+  }
+  else if ([mode isEqualToString:@"time"]) {
+    self.datePicker.datePickerMode = UIDatePickerModeTime;
+  } else {
+    self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+  }
 }
 
 - (NSDateFormatter *)createISODateFormatter:(NSString *)format timezone:(NSTimeZone *)timezone {
