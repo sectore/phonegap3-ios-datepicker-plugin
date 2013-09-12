@@ -126,12 +126,26 @@ Typ: `String`
 
 Default: `'Done'`
 
+### doneButtonColor (new)
+Hex color of done button.
+
+Typ: `String`
+
+Default: `'#0000FF'`
+
 ### cancelButtonLabel (new)
 Label of cancel button.
 
 Typ: `String`
 
 Default: `'Cancel'`
+
+### cancelButtonColor (new)
+Hex color of cancel button.
+
+Typ: `String`
+
+Default: `'#000000'`
 
 ### x (new)
 X position of date picker (iPad only). The position is absolute to the root view of the application.
