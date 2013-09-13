@@ -1,8 +1,10 @@
 /*
   Phonegap DatePicker Plugin
+  https://github.com/sectore/phonegap3-ios-datepicker-plugin
   
   Copyright (c) Greg Allen 2011
   Additional refactoring by Sam de Freyssinet
+  
   Rewrite by Jens Krause (www.websector.de)
 
   MIT Licensed
