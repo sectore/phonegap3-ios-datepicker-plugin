@@ -85,7 +85,7 @@
 - (void)jsDateSelected {
   NSTimeInterval seconds = [self.datePicker.date timeIntervalSince1970];
   NSString* jsCallback = [NSString stringWithFormat:@"datePicker._dateSelected(\"%f\");", seconds];
-  NSLog(jsCallback);
+  //NSLog(jsCallback);
   [super writeJavascript:jsCallback];
 }
 
@@ -101,6 +101,7 @@
 - (void)initDatePickerContainer:(NSMutableDictionary *)options {
   [[NSBundle mainBundle] loadNibNamed:@"DatePicker" owner:self options:nil];
   self.datePickerContainer.frame = self.webView.superview.frame;
+  self.datePickerContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
 }
 
 - (UIPopoverController *)createPopover:(NSMutableDictionary *)options {
