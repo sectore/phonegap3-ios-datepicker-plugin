@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
            id="de.websector.datepicker"
-      version="0.2.4">
+      version="0.2.5b">
 
     <name>Datepicker</name>
     <description>Cordova Datepicker Plugin (iOS only)</description>
@@ -28,6 +28,7 @@
 
        <header-file src="src/ios/DatePicker.h" />
        <source-file src="src/ios/DatePicker.m" />
+       <resource-file src="src/ios/DatePicker.xib" />
 
     </platform>
 

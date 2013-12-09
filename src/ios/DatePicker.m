@@ -19,6 +19,8 @@
 @property (nonatomic) UIPopoverController *datePickerPopover;
 
 @property (nonatomic) IBOutlet UIView* datePickerContainer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *datePickerComponentsContainerVSpace;
+@property (nonatomic) IBOutlet UIView* datePickerComponentsContainer;
 @property (nonatomic) IBOutlet UIButton *cancelButton;
 @property (nonatomic) IBOutlet UIButton *doneButton;
 @property (nonatomic) IBOutlet UIDatePicker *datePicker;
@@ -28,6 +30,7 @@
 @implementation DatePicker
 
 #define isIPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define ANIMATION_DURATION 0.3
 
 #pragma mark - UIDatePicker
 
@@ -41,14 +44,52 @@
 }
 
 - (BOOL)showForPhone:(NSMutableDictionary *)options {
-    if(!self.datePickerContainer){
-      [self initDatePickerContainer:options];
-    }
-    [self updateDatePicker:options];
-    [self updateCancelButton:options];
-    [self updateDoneButton:options];
-    [self.webView.superview addSubview: self.datePickerContainer];
-    return true;
+  if(!self.datePickerContainer){
+    [[NSBundle mainBundle] loadNibNamed:@"DatePicker" owner:self options:nil];
+  }
+  
+  [self updateDatePicker:options];
+  [self updateCancelButton:options];
+  [self updateDoneButton:options];
+  
+  UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+  
+  CGFloat width;
+  CGFloat height;
+  
+  if(UIInterfaceOrientationIsLandscape(deviceOrientation)){
+    width = self.webView.superview.frame.size.height;
+    height= self.webView.superview.frame.size.width;
+  } else {
+    width = self.webView.superview.frame.size.width;
+    height= self.webView.superview.frame.size.height;
+  }
+
+  self.datePickerContainer.frame = CGRectMake(0, 0, width, height);
+  
+  [self.webView.superview addSubview: self.datePickerContainer];
+  [self.datePickerContainer layoutIfNeeded];
+
+  CGRect frame = self.datePickerComponentsContainer.frame;
+  self.datePickerComponentsContainer.frame = CGRectOffset(frame,
+                                                          0,
+                                                          frame.size.height );
+  
+  
+  self.datePickerContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+  
+  [UIView animateWithDuration:ANIMATION_DURATION
+                        delay:0
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+    self.datePickerComponentsContainer.frame = frame;
+    self.datePickerContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+
+  } completion:^(BOOL finished) {
+    
+  }];
+  
+  return true;
 }
 
 - (BOOL)showForPad:(NSMutableDictionary *)options {
@@ -58,7 +99,21 @@
 
 - (void)hide {
   if (isIPhone) {
-    [self.datePickerContainer removeFromSuperview];
+    CGRect frame = CGRectOffset(self.datePickerComponentsContainer.frame,
+                                0,
+                                self.datePickerComponentsContainer.frame.size.height);
+    
+    [UIView animateWithDuration:ANIMATION_DURATION
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       self.datePickerComponentsContainer.frame = frame;
+                       self.datePickerContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+                       
+                     } completion:^(BOOL finished) {
+                       [self.datePickerContainer removeFromSuperview];
+                     }];
+
   } else {
     [self.datePickerPopover dismissPopoverAnimated:YES];
   }
@@ -72,7 +127,6 @@
   
 - (IBAction)cancelAction:(id)sender {
   [self hide];
-  
 }
 
 
@@ -97,12 +151,6 @@
 }
 
 #pragma mark - Factory methods
-
-- (void)initDatePickerContainer:(NSMutableDictionary *)options {
-  [[NSBundle mainBundle] loadNibNamed:@"DatePicker" owner:self options:nil];
-  self.datePickerContainer.frame = self.webView.superview.frame;
-  self.datePickerContainer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
-}
 
 - (UIPopoverController *)createPopover:(NSMutableDictionary *)options {
   

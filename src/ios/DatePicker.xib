@@ -7,7 +7,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DatePicker">
             <connections>
                 <outlet property="cancelButton" destination="xq4-6B-F5W" id="BDR-WE-Trb"/>
-                <outlet property="datePicker" destination="TMb-Do-2y9" id="Hbl-te-WSZ"/>
+                <outlet property="datePicker" destination="SUg-U1-bKY" id="aaa-Vr-qUb"/>
+                <outlet property="datePickerComponentsContainer" destination="b2J-jW-BgT" id="jYk-bM-1Mz"/>
+                <outlet property="datePickerComponentsContainerVSpace" destination="Pz2-m8-ZCU" id="HyH-ku-Omg"/>
                 <outlet property="datePickerContainer" destination="1" id="tz5-zN-epC"/>
                 <outlet property="doneButton" destination="FEs-Wn-Ur2" id="UaP-7S-x5K"/>
             </connections>
@@ -17,19 +19,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CHZ-tf-She">
-                    <rect key="frame" x="0.0" y="393" width="322" height="175"/>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2J-jW-BgT">
+                    <rect key="frame" x="0.0" y="350" width="320" height="220"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="TMb-Do-2y9">
-                            <rect key="frame" x="0.0" y="0.0" width="322" height="162"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <date key="date" timeIntervalSinceReferenceDate="407163757.75470299">
-                                <!--2013-11-26 13:02:37 +0000-->
-                            </date>
-                            <timeZone key="timeZone" name="America/Los_Angeles">
-                                <mutableData key="data">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CHZ-tf-She">
+                            <rect key="frame" x="0.0" y="54" width="320" height="180"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="SUg-U1-bKY">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="162"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <date key="date" timeIntervalSinceReferenceDate="408285701.96363503">
+                                        <!--2013-12-09 12:41:41 +0000-->
+                                    </date>
+                                    <timeZone key="timeZone" name="America/Los_Angeles">
+                                        <mutableData key="data">
 VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
 y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
 5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
@@ -48,57 +53,62 @@ AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
 </mutableData>
-                            </timeZone>
-                        </datePicker>
+                                    </timeZone>
+                                </datePicker>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="SUg-U1-bKY" secondAttribute="bottom" id="BFv-4x-nTt"/>
+                                <constraint firstAttribute="centerX" secondItem="SUg-U1-bKY" secondAttribute="centerX" id="HX3-eJ-dgx"/>
+                                <constraint firstItem="SUg-U1-bKY" firstAttribute="top" secondItem="CHZ-tf-She" secondAttribute="top" id="QPo-jn-T5C"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq4-6B-F5W">
+                            <rect key="frame" x="0.0" y="0.0" width="155" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="rdQ-Si-ceK"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <state key="normal" title="cancel button">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="blS-dS-tPm"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEs-Wn-Ur2">
+                            <rect key="frame" x="165" y="0.0" width="155" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <state key="normal" title="done button"/>
+                            <connections>
+                                <action selector="doneAction:" destination="-1" eventType="touchUpInside" id="Yt2-gL-WnC"/>
+                            </connections>
+                        </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="175" id="Ci3-Np-spj"/>
-                        <constraint firstItem="TMb-Do-2y9" firstAttribute="top" secondItem="CHZ-tf-She" secondAttribute="top" id="a3E-FE-FXE"/>
-                        <constraint firstItem="TMb-Do-2y9" firstAttribute="leading" secondItem="CHZ-tf-She" secondAttribute="leading" id="a8q-Kx-5sh"/>
-                        <constraint firstAttribute="trailing" secondItem="TMb-Do-2y9" secondAttribute="trailing" id="eNj-kk-nNR"/>
-                        <constraint firstItem="TMb-Do-2y9" firstAttribute="top" secondItem="CHZ-tf-She" secondAttribute="top" id="rrm-eE-EGg"/>
+                        <constraint firstItem="FEs-Wn-Ur2" firstAttribute="height" secondItem="xq4-6B-F5W" secondAttribute="height" id="0XS-oZ-CNe"/>
+                        <constraint firstAttribute="height" constant="210" id="9uR-69-zFL"/>
+                        <constraint firstItem="FEs-Wn-Ur2" firstAttribute="width" secondItem="xq4-6B-F5W" secondAttribute="width" id="Gl0-Ut-zPZ"/>
+                        <constraint firstItem="CHZ-tf-She" firstAttribute="leading" secondItem="b2J-jW-BgT" secondAttribute="leading" id="NUO-OT-Yul"/>
+                        <constraint firstAttribute="trailing" secondItem="CHZ-tf-She" secondAttribute="trailing" id="Pds-Eg-BO8"/>
+                        <constraint firstAttribute="bottom" secondItem="CHZ-tf-She" secondAttribute="bottom" id="Pz2-m8-ZCU"/>
+                        <constraint firstItem="xq4-6B-F5W" firstAttribute="top" secondItem="b2J-jW-BgT" secondAttribute="top" id="bcc-2v-8aw"/>
+                        <constraint firstItem="xq4-6B-F5W" firstAttribute="top" secondItem="FEs-Wn-Ur2" secondAttribute="top" id="n2U-fL-D2y"/>
+                        <constraint firstItem="CHZ-tf-She" firstAttribute="trailing" secondItem="FEs-Wn-Ur2" secondAttribute="trailing" id="uef-vO-KLf"/>
+                        <constraint firstItem="FEs-Wn-Ur2" firstAttribute="leading" secondItem="xq4-6B-F5W" secondAttribute="trailing" constant="10" id="wS8-8a-p64"/>
+                        <constraint firstItem="CHZ-tf-She" firstAttribute="top" secondItem="FEs-Wn-Ur2" secondAttribute="bottom" constant="10" id="wo1-5V-ljM"/>
+                        <constraint firstItem="CHZ-tf-She" firstAttribute="leading" secondItem="xq4-6B-F5W" secondAttribute="leading" id="yLp-P8-0xk"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEs-Wn-Ur2">
-                    <rect key="frame" x="170" y="343" width="152" height="42"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="42" id="aIU-0L-j4C"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="done button"/>
-                    <connections>
-                        <action selector="doneAction:" destination="-1" eventType="touchUpInside" id="Yt2-gL-WnC"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq4-6B-F5W">
-                    <rect key="frame" x="0.0" y="343" width="154" height="42"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="42" id="wRB-rX-ict"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="cancel button">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="blS-dS-tPm"/>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="FEs-Wn-Ur2" firstAttribute="leading" secondItem="xq4-6B-F5W" secondAttribute="trailing" constant="10" id="4jl-u3-Xh8"/>
-                <constraint firstItem="CHZ-tf-She" firstAttribute="top" secondItem="xq4-6B-F5W" secondAttribute="bottom" constant="8" symbolic="YES" id="6Nu-Qt-MLb"/>
-                <constraint firstItem="FEs-Wn-Ur2" firstAttribute="width" secondItem="xq4-6B-F5W" secondAttribute="width" constant="-2" id="923-i0-nhb"/>
-                <constraint firstItem="xq4-6B-F5W" firstAttribute="leading" secondItem="CHZ-tf-She" secondAttribute="leading" id="DbA-g1-rBY"/>
-                <constraint firstAttribute="bottom" secondItem="CHZ-tf-She" secondAttribute="bottom" id="GHS-Q0-2iw"/>
-                <constraint firstItem="CHZ-tf-She" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Ggb-bt-uts"/>
-                <constraint firstItem="xq4-6B-F5W" firstAttribute="baseline" secondItem="FEs-Wn-Ur2" secondAttribute="baseline" id="Mxe-TV-k9i"/>
-                <constraint firstAttribute="trailing" secondItem="CHZ-tf-She" secondAttribute="trailing" constant="-2" id="N7T-Af-MfE"/>
-                <constraint firstAttribute="trailing" secondItem="FEs-Wn-Ur2" secondAttribute="trailing" constant="-2" id="nmy-5D-Hf9"/>
+                <constraint firstItem="b2J-jW-BgT" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="7Cn-9l-1Ra"/>
+                <constraint firstAttribute="trailing" secondItem="b2J-jW-BgT" secondAttribute="trailing" id="ftU-Z8-LOZ"/>
+                <constraint firstAttribute="bottom" secondItem="b2J-jW-BgT" secondAttribute="bottom" id="v9p-KT-uOF"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
