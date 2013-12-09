@@ -167,35 +167,27 @@
   NSDateFormatter *formatter = [self createISODateFormatter:k_DATEPICKER_DATETIME_FORMAT timezone:[NSTimeZone defaultTimeZone]];
   NSString *mode = [options objectForKey:@"mode"];
   NSString *dateString = [options objectForKey:@"date"];
-  BOOL allowOldDates = NO;
-  BOOL allowFutureDates = YES;
+  BOOL allowOldDates = ([[options objectForKey:@"allowOldDates"] intValue] == 0) ? NO : YES;
+  BOOL allowFutureDates = ([[options objectForKey:@"allowFutureDates"] intValue] == 0) ? NO : YES;
   NSString *minDateString = [options objectForKey:@"minDate"];
   NSString *maxDateString = [options objectForKey:@"maxDate"];
     
-  if ([[options objectForKey:@"allowOldDates"] intValue] == 1) {
-    allowOldDates = YES;
-  }
-    
-  if ( !allowOldDates) {
+  if (!allowOldDates) {
     self.datePicker.minimumDate = [NSDate date];
   }
-    
-  if(minDateString){
+  
+  if(minDateString && minDateString.length > 0){
     self.datePicker.minimumDate = [formatter dateFromString:minDateString];
   }
   
-  if ([[options objectForKey:@"allowFutureDates"] intValue] == 0) {
-    allowFutureDates = NO;
-  }
-    
-  if ( !allowFutureDates) {
+  if (!allowFutureDates) {
     self.datePicker.maximumDate = [NSDate date];
   }
-    
-  if(maxDateString){
+  
+  if(maxDateString && maxDateString.length > 0){
     self.datePicker.maximumDate = [formatter dateFromString:maxDateString];
   }
-    
+  
   self.datePicker.date = [formatter dateFromString:dateString];
     
   if ([mode isEqualToString:@"date"]) {
