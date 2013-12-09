@@ -1,22 +1,18 @@
-# DatePicker iOS Plugin for using PhoneGap / Cordova 3.0 (iOS 7 beta ready)
+# DatePicker iOS Plugin for using PhoneGap / Cordova 3.0
 
 This is a re-write of the iOS DatePicker plugin hosted on [https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker](https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker) to run with PhoneGap/Cordova 3.0. 
 
-It includes [more options](#options) and it is ready for iPhone and iPad.
+It includes [more options](#options) and it is ready for using on iPhone and iPad.
+
+_Note:_ iOS6 only! For using iOS7 checkout the [ios7 branch](https://github.com/sectore/phonegap3-ios-datepicker-plugin/tree/ios7)
 
 ## Screen shots
 
-### iPhone (iOS 6)
+### iPhone
 ![screen shot iPhone](https://raw.github.com/sectore/phonegap3-ios-datepicker-plugin/master/assets/screenshot.jpg)
 
-### iPhone (iOS 7)
-![screen shot iPhone](https://raw.github.com/sectore/phonegap3-ios-datepicker-plugin/master/assets/screenshot_ios7.jpg)
-
-### iPad (iOS 6)
+### iPad
 ![screen shot iPad](https://raw.github.com/sectore/phonegap3-ios-datepicker-plugin/master/assets/screenshot_ipad.jpg)
-
-### iPad (iOS 7)
-![screen shot iPad](https://raw.github.com/sectore/phonegap3-ios-datepicker-plugin/master/assets/screenshot_ipad_ios7.jpg)
 
 ## Installation
 
@@ -169,7 +165,7 @@ Default: `'0'`
 
 ## Requirements
 - PhoneGap 3.0 or newer /Cordova 3.0 or newer
-- iOS 5 or newer
+- iOS 5/6
 
 ## Author of migration to PhoneGap 3.0
 Jens Krause // [WEBSECTOR.DE](http://www.websector.de)
