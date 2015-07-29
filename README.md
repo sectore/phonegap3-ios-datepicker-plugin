@@ -1,3 +1,5 @@
+### :exclamation: [Note] This project is deprecated and will be continued by [https://github.com/VitaliiBlagodir/cordova-plugin-datepicker](https://github.com/VitaliiBlagodir/cordova-plugin-datepicker)
+
 # DatePicker iOS Plugin for using PhoneGap / Cordova 3.0
 
 This is a re-write of the iOS DatePicker plugin hosted on [https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker](https://github.com/phonegap/phonegap-plugins/tree/master/iOS/DatePicker) to run with PhoneGap/Cordova 3.0. 
